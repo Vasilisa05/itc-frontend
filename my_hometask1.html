@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <div id="content"></div>
+    <script> 
+        fetch('https://www.reddit.com/top.json')
+            .then(page => page.json())
+            .then(myobj => myobj.data.children)
+            .then(f1 => {
+                let posts = ''
+                for (i = 0; i < f1.length; i++) {
+                    let photo
+                    if (f1[i].data.thumbnail.includes(".jpg") || f1[i].data.thumbnail.includes(".png")) {
+                        photo = f1[i].data.thumbnail
+                    } 
+                    post = `<img width="180px" height="180px" src="${photo}"/> 
+<a href="${f1[i].data.permalink}">${f1[i].data.title}</a><br> 
+`
+                    posts += post
+                }
+                const div = document.getElementById("content")
+                div.innerHTML = posts
+            }) 
+    </script>
+
+
+</body>
+
+</html>
